@@ -17,7 +17,16 @@
     <ClientId>E1840E85-8006-4032-A8DF-2942385FF1A9</ClientId>
     <VendorId>R Tandy</VendorId>
     <VendorDescription>Revit Addin Academy Student</VendorDescription>
-  </AddIn>		
+  </AddIn>
+	<AddIn Type="Command">
+		<Text>Delete Backup Files</Text>
+		<Description>Some description for RevitAddinAcademy_RT</Description>
+		<Assembly>RevitAddinAcademy_RT.dll</Assembly>
+		<FullClassName>RevitAddinAcademy_RT.cmdDeleteBackups</FullClassName>
+		<ClientId>A48F8C1D-98D4-4169-8538-56E86FF8D753</ClientId>
+		<VendorId>R Tandy</VendorId>
+		<VendorDescription>Revit Addin Academy Student</VendorDescription>
+	</AddIn>
   <AddIn Type="Application">
     <Name>Application RevitAddinAcademy_RT</Name>
     <Assembly>RevitAddinAcademy_RT.dll</Assembly>
