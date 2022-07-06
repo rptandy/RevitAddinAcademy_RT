@@ -9,6 +9,15 @@
 	<VendorId>R Tandy</VendorId>
 	<VendorDescription>Revit Addin Academy Student</VendorDescription>
   </AddIn>
+	<AddIn Type="Command">
+		<Text>Project Setup</Text>
+		<Description>Set up Levels and Sheets from Excel file</Description>
+		<Assembly>RevitAddinAcademy_RT.dll</Assembly>
+		<FullClassName>RevitAddinAcademy_RT.cmdProjectSetup</FullClassName>
+		<ClientId>A03CD75F-EE1F-45D2-B8C6-382BBE6720D3</ClientId>
+		<VendorId>R Tandy</VendorId>
+		<VendorDescription>Revit Addin Academy Student</VendorDescription>
+	</AddIn>
   <AddIn Type="Application">
     <Name>Application RevitAddinAcademy_RT</Name>
     <Assembly>RevitAddinAcademy_RT.dll</Assembly>
