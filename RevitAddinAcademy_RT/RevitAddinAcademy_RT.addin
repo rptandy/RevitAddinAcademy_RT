@@ -27,6 +27,15 @@
 		<VendorId>R Tandy</VendorId>
 		<VendorDescription>Revit Addin Academy Student</VendorDescription>
 	</AddIn>
+	<AddIn Type="Command">
+		<Text>Project Setup</Text>
+		<Description>Create Leves and Sheets from Excel</Description>
+		<Assembly>RevitAddinAcademy_RT.dll</Assembly>
+		<FullClassName>RevitAddinAcademy_RT.CmdProjectSetup</FullClassName>
+		<ClientId>ACDBBA5E-F1BF-4D11-B7AE-24923D8353F6</ClientId>
+		<VendorId>R Tandy</VendorId>
+		<VendorDescription>Revit Addin Academy Student</VendorDescription>
+	</AddIn>
   <AddIn Type="Application">
     <Name>Application RevitAddinAcademy_RT</Name>
     <Assembly>RevitAddinAcademy_RT.dll</Assembly>
