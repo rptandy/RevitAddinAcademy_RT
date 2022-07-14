@@ -5,7 +5,7 @@
     <Description>Some description for RevitAddinAcademy_RT</Description>
     <Assembly>RevitAddinAcademy_RT.dll</Assembly>
     <FullClassName>RevitAddinAcademy_RT.Command</FullClassName>
-	<ClientId>176E0B11-986F-4428-8E54-6DC46DC6DC97</ClientId>
+	<ClientId>87AA6ECB-E7D6-4B24-892D-D933E78F1BF2</ClientId>
 	<VendorId>R Tandy</VendorId>
 	<VendorDescription>Revit Addin Academy Student</VendorDescription>
   </AddIn>
@@ -15,6 +15,21 @@
 		<Assembly>RevitAddinAcademy_RT.dll</Assembly>
 		<FullClassName>RevitAddinAcademy_RT.cmdProjectSetup</FullClassName>
 		<ClientId>A03CD75F-EE1F-45D2-B8C6-382BBE6720D3</ClientId>
+  <AddIn Type="Command">
+    <Text>Command 01 Challenge</Text>
+    <Description>Demonstrate a for loop</Description>
+    <Assembly>RevitAddinAcademy_RT.dll</Assembly>
+    <FullClassName>RevitAddinAcademy_RT.Command01Challenge</FullClassName>
+    <ClientId>E1840E85-8006-4032-A8DF-2942385FF1A9</ClientId>
+    <VendorId>R Tandy</VendorId>
+    <VendorDescription>Revit Addin Academy Student</VendorDescription>
+  </AddIn>
+	<AddIn Type="Command">
+		<Text>Delete Backup Files</Text>
+		<Description>Some description for RevitAddinAcademy_RT</Description>
+		<Assembly>RevitAddinAcademy_RT.dll</Assembly>
+		<FullClassName>RevitAddinAcademy_RT.cmdDeleteBackups</FullClassName>
+		<ClientId>A48F8C1D-98D4-4169-8538-56E86FF8D753</ClientId>
 		<VendorId>R Tandy</VendorId>
 		<VendorDescription>Revit Addin Academy Student</VendorDescription>
 	</AddIn>
@@ -22,7 +37,7 @@
     <Name>Application RevitAddinAcademy_RT</Name>
     <Assembly>RevitAddinAcademy_RT.dll</Assembly>
     <FullClassName>RevitAddinAcademy_RT.App</FullClassName>
-	<ClientId>570D647A-F2B2-489C-9282-CA5CFDF9A261</ClientId>
+	<ClientId>644C837D-D303-4788-8692-D07C4998BA45</ClientId>
 	<VendorId>R Tandy</VendorId>
 	<VendorDescription>Revit Addin Academy Student</VendorDescription>
   </AddIn>
