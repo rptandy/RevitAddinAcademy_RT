@@ -32,14 +32,15 @@ namespace RevitAddinAcademy_RT
             Forms.OpenFileDialog openFileDialog = new Forms.OpenFileDialog();
             openFileDialog.InitialDirectory = "C:\\";
             openFileDialog.Multiselect = false;
-            openFileDialog.Filter = "Excel files (*.xls)|*xls* | All files (*.*)|*.*";
+            openFileDialog.Filter = "Excel files | *.xls; *.xlsx; *.xlsm | All files |*.*";
 
-            string filePath = "";
-
-            if (openFileDialog.ShowDialog() == Forms.DialogResult.OK)
+            if (openFileDialog.ShowDialog() != Forms.DialogResult.OK)
             {
-               filePath = openFileDialog.FileName;
+                TaskDialog.Show("Error", "Please select an Excel file.");
+                return Result.Failed;
             }
+
+            string filePath = openFileDialog.FileName;
 
             try
             {
@@ -48,8 +49,7 @@ namespace RevitAddinAcademy_RT
                 Excel.Workbook excelWb = excelApp.Workbooks.Open(filePath);
 
                 //Levels Data
-                int index1 = GetExcelWorksheetByName(excelWb, "Levels");
-                Excel.Worksheet excelWs1 = excelApp.Worksheets.Item[index1];
+                Excel.Worksheet excelWs1 = GetExcelWorksheetByName(excelWb, "Levels");
                 Excel.Range excelRng1 = excelWs1.UsedRange;
                 int rowCount1 = excelRng1.Rows.Count;
 
@@ -60,16 +60,13 @@ namespace RevitAddinAcademy_RT
                     Excel.Range cell1 = excelWs1.Cells[i, 1];
                     Excel.Range cell2 = excelWs1.Cells[i, 2];
 
-                    LevelStruct levelStruct = new LevelStruct();
-                    levelStruct.levelName = cell1.Value.ToString();
-                    levelStruct.levelElev = cell2.Value;
+                    LevelStruct levelStruct = new LevelStruct(cell1.Value.ToString(), cell2.Value);
 
                     levelList.Add(levelStruct);
                 }
 
                 //Sheet Data
-                int index2 = GetExcelWorksheetByName(excelWb, "Sheets");
-                Excel.Worksheet excelWs2 = excelApp.Worksheets.Item[index2];
+                Excel.Worksheet excelWs2 = GetExcelWorksheetByName(excelWb, "Sheets"); 
                 Excel.Range excelRng2 = excelWs2.UsedRange;
                 int rowCount2 = excelRng2.Rows.Count;
 
@@ -117,10 +114,8 @@ namespace RevitAddinAcademy_RT
                     tx.Start("Project Setup");
 
                     //Process levels
-                    for (int i = 0; i < levelList.Count; i++)
+                    foreach (LevelStruct curLevel in levelList)
                     {
-                        LevelStruct curLevel = levelList[i];
-
                         try
                         {
                             Level newLevel = Level.Create(doc, curLevel.levelElev);
@@ -139,11 +134,10 @@ namespace RevitAddinAcademy_RT
                     }
 
                     //Process Sheets
-                    for (int j = 0; j < sheetList.Count; j++)
+                    foreach (SheetStruct curSheet in sheetList)
                     {
-                        SheetStruct curSheet = sheetList[j];
                         ElementId titleBlock = GetTitleblockByName(doc, "Alliance 30 x 42");
-                        XYZ insPoint = new XYZ(0,0,0);
+                        XYZ insPoint = new XYZ(0.5,0,0.5);
                         View viewAdd = GetViewByName(doc, curSheet.viewName);
 
                         try
@@ -187,19 +181,34 @@ namespace RevitAddinAcademy_RT
             return Result.Succeeded;
         }
 
-        internal struct LevelStruct
+        public struct LevelStruct
         {
             public string levelName;
             public double levelElev;
+
+            public LevelStruct(string name, double elev)
+            {
+                levelName = name;
+                levelElev = elev;
+            }
         }
 
-        internal struct SheetStruct
+        public struct SheetStruct
         {
             public string sheetNum;
             public string sheetName;
             public string viewName;
             public string drawnBy;
             public string checkedBy;
+
+            public SheetStruct(string number, string name, string view, string db, string cb)
+            {
+                sheetNum = number;
+                sheetName = name;
+                viewName = view;
+                drawnBy = db;
+                checkedBy = cb;
+            }
         }
 
         internal View GetViewByName(Document doc, string viewName)
@@ -218,21 +227,17 @@ namespace RevitAddinAcademy_RT
             return null;
         }
 
-        public int GetExcelWorksheetByName(Excel.Workbook excelWb, string name)
+        public Excel.Worksheet GetExcelWorksheetByName(Excel.Workbook excelWb, string name)
         {
-            int count = excelWb.Worksheets.Count;
-            int index = 1;
-
-            for (int i = 1; i <= count; i++)
+            foreach (Excel.Worksheet curWs in excelWb.Worksheets)
             {
-                Excel.Worksheet curWs = excelWb.Worksheets[i];
                 if(curWs.Name == name)
                 {
-                    index = curWs.Index;
+                    return curWs;
                 }
             }
 
-            return index;
+            return null;
         }
         
         public ElementId GetTitleblockByName(Document doc, string name)
