@@ -15,7 +15,7 @@ using System.IO;
 namespace RevitAddinAcademy_RT
 {
     [Transaction(TransactionMode.Manual)]
-    public class cmdDeleteBackups : IExternalCommand
+    public class CmdDeleteBackups : IExternalCommand
     {
         public Result Execute(
           ExternalCommandData commandData,
