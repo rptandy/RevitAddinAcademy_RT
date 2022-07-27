@@ -17,7 +17,7 @@ using Autodesk.Revit.DB.Plumbing;
 namespace RevitAddinAcademy_RT
 {
     [Transaction(TransactionMode.Manual)]
-    public class Command : IExternalCommand
+    public class CmdElementsFromLines : IExternalCommand
     {
         public Result Execute(
           ExternalCommandData commandData,
@@ -29,72 +29,65 @@ namespace RevitAddinAcademy_RT
             Application app = uiapp.Application;
             Document doc = uidoc.Document;
 
+            //Select elements
             IList<Element> pickList = uidoc.Selection.PickElementsByRectangle("Select elements by rectangle:");
-            List<CurveElement> curveList = new List<CurveElement>();
 
-            WallType curWallType = GetWallTypeByName(doc, "Partition A30X");
-            Level curLevel = GetLevelByName(doc, "_OVERALL FLOOR PLAN");
-
-            MEPSystemType curSystemType = GetSystemTypeByName(doc, "Domestic Hot Water");
+            //Select Types
+            Level curLevel = GetLevelByName(doc, "Level 1");
+            WallType curWallType = GetWallTypeByName(doc, @"Generic - 8""");
+            WallType curStorefrontType = GetWallTypeByName(doc, "Storefront");
+            MEPSystemType curMechType = GetSystemTypeByName(doc, "Supply Air");
+            MEPSystemType curPlumbType = GetSystemTypeByName(doc, "Domestic Hot Water");
+            DuctType curDuctType = GetDuctTypeByName(doc, "Default");
             PipeType curPipeType = GetPipeTypeByName(doc, "Default");
 
-            using (Transaction t = new Transaction(doc))
+
+            using (Transaction t = new Transaction(doc, "Elements from Lines"))
             {
                 t.Start();
                 foreach (Element element in pickList)
                 {
-                    //Cast Element to something more specific
                     if (element is CurveElement)
                     {
+                        //Cast Element to CurveElement
                         CurveElement curve = (CurveElement)element;
-                        //CurveElement curve2 = element as CurveElement;  //same thing, different syntax
 
-                        curveList.Add(curve);
+                        //Get Geometry
+                        Curve curCurve = curve.GeometryCurve;
 
+                        //Switch by Line Style
                         GraphicsStyle curGS = curve.LineStyle as GraphicsStyle;
 
                         switch (curGS.Name)
                         {
-                            case "<Medium Lines>":
-                                Debug.Print("found a medium line");
+                            case "A-GLAZ":
+                                Wall newStorefront = Wall.Create(doc, curCurve, curStorefrontType.Id, curLevel.Id, 10, 0, false, false);
                                 break;
 
-                            case "<Thin Lines>":
-                                Debug.Print("found a thin line");
+                            case "A-WALL":
+                                Wall newGeneric = Wall.Create(doc, curCurve, curWallType.Id, curLevel.Id, 10, 0, false, false);
                                 break ;
 
-                            case "<Wide Lines>":
-                                Debug.Print("found a wide line");
+                            case "M-DUCT":
+                                XYZ startPoint = curCurve.GetEndPoint(0);
+                                XYZ endPoint = curCurve.GetEndPoint(1);
+                                Duct newDuct = Duct.Create(doc, curMechType.Id, curDuctType.Id, curLevel.Id, startPoint, endPoint);
+                                break;
+
+                            case "P-PIPE":
+                                XYZ startPoint2 = curCurve.GetEndPoint(0);
+                                XYZ endPoint2 = curCurve.GetEndPoint(1);
+                                Pipe newPipe = Pipe.Create(doc, curPlumbType.Id, curPipeType.Id, curLevel.Id, startPoint2, endPoint2);
                                 break;
 
                             default:
-                                Debug.Print("Found something else");
                                 break;
                         }
-
-                        Curve curCurve = curve.GeometryCurve;
-                        XYZ startPoint = curCurve.GetEndPoint(0);
-                        XYZ endPoint = curCurve.GetEndPoint(1);
-
-                        //Wall newWall = Wall.Create(doc, curCurve, curWallType.Id, curLevel.Id, 15, 0, false, false);
-
-                        Pipe newPipe = Pipe.Create(
-                            doc,
-                            curSystemType.Id,
-                            curPipeType.Id,
-                            curLevel.Id,
-                            startPoint,
-                            endPoint);
-
-
-                        Debug.Print(curGS.Name);
 
                     }
                 }
                 t.Commit();
             }
-
-                TaskDialog.Show("Complete", curveList.Count.ToString());
 
             return Result.Succeeded;
         }
@@ -138,6 +131,22 @@ namespace RevitAddinAcademy_RT
             foreach (Element curElem in collector)
             {
                 MEPSystemType curType = (MEPSystemType)curElem;
+
+                if (curType.Name == typeName)
+                    return curType;
+            }
+            return null;
+        }
+
+
+        private DuctType GetDuctTypeByName(Document doc, string typeName)
+        {
+            FilteredElementCollector collector = new FilteredElementCollector(doc);
+            collector.OfClass(typeof(DuctType));
+
+            foreach (Element curElem in collector)
+            {
+                DuctType curType = (DuctType)curElem;
 
                 if (curType.Name == typeName)
                     return curType;
