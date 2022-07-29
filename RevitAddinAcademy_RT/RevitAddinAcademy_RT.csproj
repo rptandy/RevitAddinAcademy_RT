@@ -54,6 +54,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.cs" />
+    <Compile Include="CmdMovingDay.cs" />
+    <Compile Include="Utilities.cs" />
+    <Compile Include="Furniture.cs" />
     <Compile Include="CmdDeleteBackups.cs" />
     <Compile Include="CmdProjectSetup.cs" />
     <Compile Include="CmdElementsFromLines.cs" />
