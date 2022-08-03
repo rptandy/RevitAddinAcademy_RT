@@ -45,6 +45,15 @@
 		<VendorId>R Tandy</VendorId>
 		<VendorDescription>Revit Addin Academy Student</VendorDescription>
 	</AddIn>
+	<AddIn Type="Command">
+		<Text>Moving Day</Text>
+		<Description>Add Furniture to Rooms</Description>
+		<Assembly>RevitAddinAcademy_RT.dll</Assembly>
+		<FullClassName>RevitAddinAcademy_RT.CmdMovingDay</FullClassName>
+		<ClientId>8679CECB-A936-4D19-8E42-0EB97E9F2469</ClientId>
+		<VendorId>R Tandy</VendorId>
+		<VendorDescription>Revit Addin Academy Student</VendorDescription>
+	</AddIn>
 	
   <AddIn Type="Application">
     <Name>Application RevitAddinAcademy_RT</Name>
