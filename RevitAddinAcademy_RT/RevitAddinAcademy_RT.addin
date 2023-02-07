@@ -54,6 +54,15 @@
 		<VendorId>R Tandy</VendorId>
 		<VendorDescription>Revit Addin Academy Student</VendorDescription>
 	</AddIn>
+	<AddIn Type="Command">
+		<Text>To-Do List</Text>
+		<Description>Create a To-Do list for this Revit project</Description>
+		<Assembly>RevitAddinAcademy_RT.dll</Assembly>
+		<FullClassName>RevitAddinAcademy_RT.CmdToDo</FullClassName>
+		<ClientId>53E7B22C-4A26-4532-8DE8-2F22E0321500</ClientId>
+		<VendorId>R Tandy</VendorId>
+		<VendorDescription>Revit Addin Academy Student</VendorDescription>
+	</AddIn>
 	
   <AddIn Type="Application">
     <Name>Application RevitAddinAcademy_RT</Name>
@@ -63,4 +72,5 @@
 	<VendorId>R Tandy</VendorId>
 	<VendorDescription>Revit Addin Academy Student</VendorDescription>
   </AddIn>
+	
 </RevitAddIns>

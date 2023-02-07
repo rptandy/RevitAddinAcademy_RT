@@ -50,10 +50,21 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.cs" />
+    <Compile Include="cmdToDo.cs" />
+    <Compile Include="FrmToDo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmToDo.Designer.cs">
+      <DependentUpon>FrmToDo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ToDoData.cs" />
     <Compile Include="CmdMovingDay.cs" />
     <Compile Include="Utilities.cs" />
     <Compile Include="Furniture.cs" />
@@ -95,6 +106,11 @@
       <Isolated>False</Isolated>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </COMReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="FrmToDo.resx">
+      <DependentUpon>FrmToDo.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
