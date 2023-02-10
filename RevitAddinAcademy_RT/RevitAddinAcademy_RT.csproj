@@ -58,6 +58,13 @@
   <ItemGroup>
     <Compile Include="App.cs" />
     <Compile Include="cmdToDo.cs" />
+    <Compile Include="frmToDo_Sln.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmToDo_Sln.Designer.cs">
+      <DependentUpon>frmToDo_Sln.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RAA_Session07Challenge.cs" />
     <Compile Include="FrmToDo.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -66,6 +73,7 @@
     </Compile>
     <Compile Include="ToDoData.cs" />
     <Compile Include="CmdMovingDay.cs" />
+    <Compile Include="TodoData_Sln.cs" />
     <Compile Include="Utilities.cs" />
     <Compile Include="Furniture.cs" />
     <Compile Include="CmdDeleteBackups.cs" />
@@ -110,6 +118,9 @@
   <ItemGroup>
     <EmbeddedResource Include="FrmToDo.resx">
       <DependentUpon>FrmToDo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmToDo_Sln.resx">
+      <DependentUpon>frmToDo_Sln.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
